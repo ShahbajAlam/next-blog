@@ -2,11 +2,12 @@ import mongoose from "mongoose";
 
 export type BlogProps = {
     _id?: any;
+    createdAt?: any;
+    updatedAt?: any;
+
     title: string;
     content: string;
-    createdAt?: any;
     authorID: string;
-    updatedAt?: any;
     authorName: string;
     authorImage: string;
 };

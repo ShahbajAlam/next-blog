@@ -3,6 +3,7 @@
 import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 import addPost from "@/actions/addPost";
@@ -12,6 +13,7 @@ import fetchUserID from "@/actions/fetchUserID";
 import { formats, modules } from "@/utils/editorData";
 
 export default function Editor() {
+    const router = useRouter();
     const session = useSession();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
@@ -27,23 +29,32 @@ export default function Editor() {
             return;
         }
 
-        const userID = await fetchUserID(session.data?.user?.email as string);
+        try {
+            const userID = await fetchUserID(
+                session.data?.user?.email as string
+            );
 
-        const blog: BlogProps = {
-            title,
-            content,
-            authorID: userID,
-            authorName: session.data?.user?.name as string,
-            authorImage: session.data?.user?.image as string,
-        };
+            if (!userID) throw new Error("Could not post the blog");
 
-        const addedBlog = await addPost(blog);
+            const blog: BlogProps = {
+                title,
+                content,
+                authorID: userID,
+                authorName: session.data?.user?.name as string,
+                authorImage: session.data?.user?.image as string,
+            };
 
-        if (addedBlog) {
-            showToast("success", "Blog is posted successfully");
-            resetForm();
-        } else {
-            showToast("error", "Could not post the blog");
+            const addedBlog = await addPost(blog);
+
+            if (addedBlog) {
+                showToast("success", "Blog is posted successfully");
+                resetForm();
+                router.push("/");
+            } else {
+                showToast("error", "Could not post the blog");
+            }
+        } catch (err) {
+            if (err instanceof Error) showToast("error", err.message);
         }
     };
 

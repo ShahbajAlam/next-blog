@@ -11,7 +11,7 @@ export default async function Home() {
             {posts?.map((post: BlogProps) => (
                 <ShowBlogs
                     _id={post._id.toString()}
-                    key={post._id}
+                    key={post._id.toString()}
                     title={post.title}
                     content={post.content}
                     createdAt={post.createdAt}

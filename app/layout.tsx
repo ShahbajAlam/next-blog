@@ -5,6 +5,7 @@ import AuthProvider from "@/providers/AuthProvider";
 import { ThemeProvider } from "@/providers/ThemeContext";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
+import AnimateProvider from "./template";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,7 @@ export default function RootLayout({
                     <body className={inter.className}>
                         <Toaster />
                         <Navbar />
-                        {children}
+                        <AnimateProvider>{children}</AnimateProvider>
                     </body>
                 </html>
             </ThemeProvider>
