@@ -29,10 +29,7 @@ export default function SearchBlog() {
                             className="input w-full input-bordered rounded-lg mt-3 focus:outline-0 placeholder:text-gray-950 dark:placeholder:text-gray-50"
                         />
                     </div>
-                    <ShowBlogs
-                        loading={data?.loading as boolean}
-                        posts={posts as BlogProps[]}
-                    />
+                    <ShowBlogs posts={posts as BlogProps[]} />
                 </div>
             )}
         </>
