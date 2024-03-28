@@ -10,7 +10,7 @@ export default async function addPost(blog: BlogProps) {
         const addedBlog = await Blog.create({ ...blog });
         if (addedBlog) {
             revalidatePath("/", "page");
-            return addedBlog._id.toString();
+            return addedBlog;
         }
     } catch (error) {
         console.log(error);

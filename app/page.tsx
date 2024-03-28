@@ -8,7 +8,8 @@ export default async function Home() {
     return (
         <div className="min-h-dvh px-4 pt-20 pb-4 flex flex-col justify-center items-center">
             <h1>Home Page</h1>
-            {posts?.map((post: BlogProps) => (
+            <ShowBlogs/>
+            {/* {posts?.map((post: BlogProps) => (
                 <ShowBlogs
                     _id={post._id.toString()}
                     key={post._id.toString()}
@@ -20,7 +21,7 @@ export default async function Home() {
                     authorName={post.authorName}
                     authorImage={post.authorImage}
                 />
-            ))}
+            ))} */}
         </div>
     );
 }

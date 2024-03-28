@@ -11,8 +11,10 @@ import showToast from "@/utils/showToast";
 import { BlogProps } from "@/models/blogs";
 import fetchUserID from "@/actions/fetchUserID";
 import { formats, modules } from "@/utils/editorData";
+import { usePosts } from "@/providers/PostContext";
 
 export default function Editor() {
+    const data = usePosts();
     const router = useRouter();
     const session = useSession();
     const [title, setTitle] = useState("");
@@ -45,11 +47,11 @@ export default function Editor() {
             };
 
             const addedBlog = await addPost(blog);
+            data?.setPosts((e) => [...e, addedBlog]);
 
             if (addedBlog) {
                 showToast("success", "Blog is posted successfully");
                 resetForm();
-                router.push("/");
             } else {
                 showToast("error", "Could not post the blog");
             }
