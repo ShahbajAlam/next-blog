@@ -13,7 +13,7 @@ export default function AnimateProvider({ children }: { children: ReactNode }) {
                 opacity: 1,
             }}
             transition={{
-                duration: 0.5,
+                duration: 0.15,
                 ease: "easeOut",
             }}
         >
