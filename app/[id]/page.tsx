@@ -1,5 +1,6 @@
 import { BlogProps } from "@/models/blogs";
 import fetchSinglePost from "@/actions/fetchSinglePost";
+import ShowSingleBlog from "@/components/ShowSingleBlog";
 
 type Params = {
     params: {
@@ -8,10 +9,9 @@ type Params = {
 };
 
 export default async function SingleBlogPage({ params: { id } }: Params) {
-    const post: BlogProps = await fetchSinglePost(id);
     return (
         <div className="min-h-dvh px-4 pt-20 pb-4 flex flex-col justify-center items-center">
-            <h1>{post.title}</h1>
+            <ShowSingleBlog id={id} />
         </div>
     );
 }

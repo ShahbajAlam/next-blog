@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import AuthProvider from "@/providers/AuthProvider";
-import { ThemeProvider } from "@/providers/ThemeContext";
-import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
-import AnimateProvider from "./template";
+
+import "./globals.css";
+import Navbar from "@/components/Navbar";
+import AuthProvider from "@/providers/AuthProvider";
 import { PostProvider } from "@/providers/PostContext";
+import { ThemeProvider } from "@/providers/ThemeContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,7 +28,7 @@ export default function RootLayout({
                         <PostProvider>
                             <Toaster />
                             <Navbar />
-                            <AnimateProvider>{children}</AnimateProvider>
+                            {children}
                         </PostProvider>
                     </body>
                 </html>
