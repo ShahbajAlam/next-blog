@@ -1,5 +1,3 @@
-import { BlogProps } from "@/models/blogs";
-import fetchSinglePost from "@/actions/fetchSinglePost";
 import ShowSingleBlog from "@/components/ShowSingleBlog";
 
 type Params = {
