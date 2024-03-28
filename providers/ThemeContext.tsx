@@ -1,15 +1,29 @@
 "use client";
 
-import { ReactNode, createContext, useContext, useState } from "react";
+import {
+    Dispatch,
+    ReactNode,
+    SetStateAction,
+    createContext,
+    useContext,
+    useState,
+} from "react";
 
-const ThemeContext = createContext<any>(null);
+type ThemeProps = {
+    theme: string | undefined;
+    setTheme: Dispatch<SetStateAction<string | undefined>>;
+} | null;
+
+const ThemeContext = createContext<ThemeProps>(null);
 
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
     const [theme, setTheme] = useState(() => {
         if (typeof localStorage !== "undefined")
-            return localStorage.getItem("theme")
-                ? localStorage.getItem("theme")
-                : "bumblebee";
+            return (
+                localStorage.getItem("theme")
+                    ? localStorage.getItem("theme")
+                    : "bumblebee"
+            ) as string;
     });
 
     return (

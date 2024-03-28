@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 export type BlogProps = {
     _id?: any;
+    __v?: any;
     createdAt?: any;
     updatedAt?: any;
 

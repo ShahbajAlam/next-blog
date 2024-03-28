@@ -8,12 +8,14 @@ function ToggleThemeIcon() {
 
     useEffect(() => {
         const html = document.documentElement;
-        html.setAttribute("data-theme", theme);
-        localStorage.setItem("theme", theme);
+        html.setAttribute("data-theme", theme as string);
+        localStorage.setItem("theme", theme as string);
     }, [theme]);
 
     const toggleTheme = () => {
-        setTheme((old: string) => (old === "forest" ? "bumblebee" : "forest"));
+        setTheme((old: string | undefined) =>
+            old === "forest" ? "bumblebee" : "forest"
+        );
     };
 
     return (
