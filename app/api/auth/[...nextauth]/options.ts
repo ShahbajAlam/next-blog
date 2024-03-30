@@ -20,11 +20,16 @@ export const options: NextAuthOptions = {
         async signIn(params) {
             try {
                 connectDB();
-
-                const user = await User.findOne({ email: params.user.email });
+                const user = await User.findOne({
+                    $and: [
+                        { email: params.user.email },
+                        { provider: params.account?.provider },
+                    ],
+                });
 
                 if (!user) {
                     await User.create({
+                        provider: params.account?.provider,
                         username: params.user.name,
                         email: params.user.email,
                         image: params.user.image,

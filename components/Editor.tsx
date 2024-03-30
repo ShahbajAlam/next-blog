@@ -14,9 +14,8 @@ import { formats, modules } from "@/utils/editorData";
 import { usePosts } from "@/providers/PostContext";
 
 export default function Editor() {
-    const data = usePosts();
-    const router = useRouter();
     const session = useSession();
+    const { setPosts } = usePosts();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
 
@@ -46,8 +45,8 @@ export default function Editor() {
                 authorImage: session.data?.user?.image as string,
             };
 
-            const addedBlog = await addPost(blog);
-            data?.setPosts((e) => [...e, addedBlog]);
+            const addedBlog = (await addPost(blog));
+            setPosts((e) => [...e, addedBlog]);
 
             if (addedBlog) {
                 showToast("success", "Blog is posted successfully");
