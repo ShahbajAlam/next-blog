@@ -3,15 +3,14 @@
 import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 import addPost from "@/actions/addPost";
 import showToast from "@/utils/showToast";
 import { BlogProps } from "@/models/blogs";
 import fetchUserID from "@/actions/fetchUserID";
-import { formats, modules } from "@/utils/editorData";
 import { usePosts } from "@/providers/PostContext";
+import { formats, modules } from "@/utils/editorData";
 
 export default function Editor() {
     const session = useSession();
@@ -32,7 +31,8 @@ export default function Editor() {
 
         try {
             const userID = await fetchUserID(
-                session.data?.user?.email as string
+                session.data?.user?.email as string,
+                session.data?.user?.image as string
             );
 
             if (!userID) throw new Error("Could not post the blog");
@@ -45,7 +45,7 @@ export default function Editor() {
                 authorImage: session.data?.user?.image as string,
             };
 
-            const addedBlog = (await addPost(blog));
+            const addedBlog = await addPost(blog);
             setPosts((e) => [...e, addedBlog]);
 
             if (addedBlog) {
