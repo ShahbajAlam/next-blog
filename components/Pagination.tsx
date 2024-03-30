@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 
 type PaginationProps = {
     page: number;
@@ -14,6 +14,7 @@ export default function Pagination({
     setPage,
 }: PaginationProps) {
     const lastPage = Math.ceil(totalCount / 5);
+
     const handlePrevPage = () => {
         if (page === 1) return;
         setPage((e) => e - 1);
@@ -37,7 +38,7 @@ export default function Pagination({
     return (
         <div className="join mb-3 mt-8">
             <button
-                className="join-item btn disabled:cursor-not-allowed"
+                className="join-item btn px-8 disabled:cursor-not-allowed"
                 onClick={handlePrevPage}
                 disabled={page === 1}
             >
@@ -45,7 +46,7 @@ export default function Pagination({
             </button>
             <button className="join-item btn">Page {page}</button>
             <button
-                className="join-item btn disabled:cursor-not-allowed"
+                className="join-item btn px-8 disabled:cursor-not-allowed"
                 onClick={handleNextPage}
                 disabled={page === lastPage}
             >

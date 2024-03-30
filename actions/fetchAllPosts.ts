@@ -1,17 +1,13 @@
 "use server";
 
-import { connectDB } from "@/DB/connectDB";
 import { Blog } from "@/models/blogs";
+import { connectDB } from "@/DB/connectDB";
 
-export default async function fetchAllPosts(page: number) {
+export default async function fetchAllPosts() {
     try {
         connectDB();
-        const totalCount = await Blog.countDocuments({});
-        const posts = await Blog.find({})
-            .sort({ createdAt: -1 })
-            .skip((page - 1) * 5)
-            .limit(5);
-        if (posts) return { totalCount, posts };
+        const posts = await Blog.find({}).sort({ createdAt: -1 });
+        if (posts) return posts;
     } catch (error) {
         console.log(error);
     }

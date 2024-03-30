@@ -9,38 +9,47 @@ import {
     useEffect,
     useState,
 } from "react";
+
 import { BlogProps } from "@/models/blogs";
 import fetchAllPosts from "@/actions/fetchAllPosts";
 
-const PostContext = createContext<{
+type ContextProps = {
+    page: number;
     loading: boolean;
     posts: BlogProps[];
-    page: number;
     totalCount: number;
     setPage: Dispatch<SetStateAction<number>>;
-    setPosts: Dispatch<SetStateAction<BlogProps[]>>;
-} | null>(null);
+};
+
+const initialValue: ContextProps = {
+    loading: true,
+    page: 1,
+    posts: [],
+    setPage: () => {},
+    totalCount: 0,
+};
+
+const PostContext = createContext<ContextProps>(initialValue);
 
 const PostProvider = ({ children }: { children: ReactNode }) => {
-    const [page, setPage] = useState<number>(1);
     const [totalCount, setTotalCount] = useState<number>(0);
+    const [page, setPage] = useState<number>(1);
     const [posts, setPosts] = useState<BlogProps[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        const getAllPosts = async () => {
+        (async () => {
             setLoading(true);
-            const data = await fetchAllPosts(page);
-            setTotalCount(data?.totalCount as number);
-            setPosts(data?.posts as BlogProps[]);
+            const posts = await fetchAllPosts();
+            setPosts(posts as BlogProps[]);
+            setTotalCount(posts?.length as number);
             setLoading(false);
-        };
-        getAllPosts();
-    }, [page]);
+        })();
+    }, []);
 
     return (
         <PostContext.Provider
-            value={{ loading, posts, totalCount, page, setPage, setPosts }}
+            value={{ loading, posts, totalCount, page, setPage }}
         >
             {children}
         </PostContext.Provider>
