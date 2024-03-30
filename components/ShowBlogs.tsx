@@ -14,7 +14,8 @@ export default function ShowBlogs() {
     const data = usePosts();
     const totalCount = data?.totalCount;
     const posts = data?.posts as BlogProps[];
-    
+    console.log(data?.loading);
+
     return (
         <>
             {data?.loading && <Spinner size={80} />}
