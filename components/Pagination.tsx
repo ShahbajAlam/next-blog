@@ -35,7 +35,7 @@ export default function Pagination({
     };
 
     return (
-        <div className="join my-3">
+        <div className="join mb-3 mt-8">
             <button
                 className="join-item btn disabled:cursor-not-allowed"
                 onClick={handlePrevPage}

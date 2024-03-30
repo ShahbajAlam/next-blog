@@ -14,11 +14,10 @@ export default function ShowBlogs() {
     const data = usePosts();
     const totalCount = data?.totalCount;
     const posts = data?.posts as BlogProps[];
-    console.log(data?.loading);
 
     return (
         <>
-            {data?.loading && <Spinner size={80} />}
+            {data?.loading && <Spinner size={60} />}
             {!data?.loading && (
                 <>
                     <div className="w-full flex flex-col gap-5">
