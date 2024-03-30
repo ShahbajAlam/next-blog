@@ -3,8 +3,6 @@
 import { useState } from "react";
 
 import Spinner from "./Spinner";
-import ShowBlogs from "./ShowBlogs";
-import { BlogProps } from "@/models/blogs";
 import { usePosts } from "@/providers/PostContext";
 
 export default function SearchBlog() {
@@ -29,7 +27,6 @@ export default function SearchBlog() {
                             className="input w-full input-bordered rounded-lg mt-3 focus:outline-0 placeholder:text-gray-950 dark:placeholder:text-gray-50"
                         />
                     </div>
-                    <ShowBlogs posts={posts as BlogProps[]} />
                 </div>
             )}
         </>
