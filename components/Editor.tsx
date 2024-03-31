@@ -1,66 +1,19 @@
-"use client";
+import { type Dispatch, type SetStateAction } from "react";
 
-import { useState } from "react";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import { useSession } from "next-auth/react";
-
-import addPost from "@/actions/addPost";
-import showToast from "@/utils/showToast";
-import { BlogProps } from "@/models/blogs";
-import fetchUserID from "@/actions/fetchUserID";
-import { usePosts } from "@/providers/PostContext";
 import { formats, modules } from "@/utils/editorData";
 
-export default function Editor() {
-    const session = useSession();
-    const { setPosts } = usePosts();
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
+type EditorProps = {
+    title: string;
+    content: string;
+    setTitle: Dispatch<SetStateAction<string>>;
+    setContent: Dispatch<SetStateAction<string>>;
+    handleForm: () => void;
+};
 
-    const resetForm = () => {
-        setTitle("");
-        setContent("");
-    };
-
-    const handleForm = async () => {
-        if (!title || !content) {
-            showToast("error", "Both fields are required");
-            return;
-        }
-
-        try {
-            const userID = await fetchUserID(
-                session.data?.user?.email as string,
-                session.data?.user?.image as string
-            );
-
-            if (!userID) throw new Error("Could not post the blog");
-
-            const blog: BlogProps = {
-                title,
-                content,
-                authorID: userID,
-                authorName: session.data?.user?.name as string,
-                authorImage: session.data?.user?.image as string,
-            };
-
-            const addedBlog = await addPost(blog);
-            setPosts((e) => [...e, addedBlog]);
-
-            if (addedBlog) {
-                showToast("success", "Blog is posted successfully");
-                resetForm();
-            } else {
-                showToast("error", "Could not post the blog");
-            }
-        } catch (err) {
-            if (err instanceof Error) showToast("error", err.message);
-        }
-    };
-
+export default function Editor(props: EditorProps) {
     return (
-        <form action={handleForm} className="w-full flex flex-col gap-6">
+        <form action={props.handleForm} className="w-full flex flex-col gap-6">
             <div>
                 <label htmlFor="title" className="text-xl">
                     Title of your blog
@@ -69,16 +22,16 @@ export default function Editor() {
                     id="title"
                     name="title"
                     type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    value={props.title}
+                    onChange={(e) => props.setTitle(e.target.value)}
                     className="input w-full input-bordered rounded-none border-gray-200 mt-3 focus:outline-0"
                 />
             </div>
             <label className="text-xl">Content of the blog</label>
             <ReactQuill
                 theme="snow"
-                value={content}
-                onChange={setContent}
+                value={props.content}
+                onChange={props.setContent}
                 modules={modules}
                 formats={formats}
                 placeholder="Start writing your blog..."
