@@ -1,10 +1,10 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import { useSession } from "next-auth/react";
 
-import WriteBlog from "./Editor";
+import Editor from "./Editor";
 import addPost from "@/actions/addPost";
 import showToast from "@/utils/showToast";
 import { BlogProps } from "@/models/blogs";
@@ -59,7 +59,7 @@ export default function WritePost() {
     };
 
     return (
-        <WriteBlog
+        <Editor
             title={title}
             content={content}
             setTitle={setTitle}

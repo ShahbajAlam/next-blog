@@ -8,7 +8,7 @@ import ShowBlogs from "./ShowBlogs";
 import SearchBlog from "./SearchBlog";
 import { usePosts } from "@/providers/PostContext";
 
-const POSTS_PER_PAGE = 5;
+export const POSTS_PER_PAGE = 5;
 
 export default function PostContainer() {
     const [searchValue, setSearchValue] = useState<string>("");

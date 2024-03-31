@@ -1,6 +1,7 @@
 "use client";
 
 import { type Dispatch, type SetStateAction } from "react";
+import { POSTS_PER_PAGE } from "./PostsContainer";
 
 type PaginationProps = {
     page: number;
@@ -13,11 +14,9 @@ export default function Pagination({
     totalCount,
     setPage,
 }: PaginationProps) {
-    const lastPage = Math.ceil(totalCount / 5);
+    const lastPage = Math.ceil(totalCount / POSTS_PER_PAGE);
 
-    const handlePrevPage = () => {
-        if (page === 1) return;
-        setPage((e) => e - 1);
+    const scrollToTop = () => {
         if (typeof window !== "undefined")
             window.scrollTo({
                 top: 0,
@@ -25,14 +24,16 @@ export default function Pagination({
             });
     };
 
+    const handlePrevPage = () => {
+        scrollToTop();
+        if (page === 1) return;
+        setPage((e) => e - 1);
+    };
+
     const handleNextPage = () => {
+        scrollToTop();
         if (page === lastPage) return;
         setPage((e) => e + 1);
-        if (typeof window !== "undefined")
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth",
-            });
     };
 
     return (
