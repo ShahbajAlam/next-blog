@@ -14,6 +14,9 @@ export default function ShowBlogs({ posts }: { posts: BlogProps[] }) {
     return (
         <>
             {loading && <Spinner size={50} />}
+            {!loading && posts.length === 0 && (
+                <h1 className="text-2xl">No blog found</h1>
+            )}
             {!loading && (
                 <div className="w-full flex flex-col gap-5">
                     {posts.map((post) => (
