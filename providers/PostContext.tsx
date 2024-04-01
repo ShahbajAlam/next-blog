@@ -19,7 +19,6 @@ type ContextProps = {
     posts: BlogProps[];
     totalCount: number;
     setPage: Dispatch<SetStateAction<number>>;
-    setPosts: Dispatch<SetStateAction<BlogProps[]>>;
 };
 
 const initialValue: ContextProps = {
@@ -28,7 +27,6 @@ const initialValue: ContextProps = {
     posts: [],
     totalCount: 0,
     setPage: () => {},
-    setPosts: () => {},
 };
 
 const PostContext = createContext<ContextProps>(initialValue);
@@ -51,7 +49,7 @@ const PostProvider = ({ children }: { children: ReactNode }) => {
 
     return (
         <PostContext.Provider
-            value={{ loading, posts, totalCount, page, setPage, setPosts }}
+            value={{ loading, posts, totalCount, page, setPage }}
         >
             {children}
         </PostContext.Provider>
