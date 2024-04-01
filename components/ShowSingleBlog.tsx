@@ -13,7 +13,7 @@ export default function ShowSingleBlog({ post }: { post: BlogProps }) {
         <>
             {loading && <Spinner size={80} />}
             {!loading && (
-                <div className="w-full overflow-x-scroll">
+                <div className="w-full">
                     <div className="my-4">
                         <h1 className="text-2xl">{post.title}</h1>
                         <p>Posted By - {post.authorName}</p>
