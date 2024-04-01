@@ -9,11 +9,9 @@ import addPost from "@/actions/addPost";
 import showToast from "@/utils/showToast";
 import { BlogProps } from "@/models/blogs";
 import fetchUserID from "@/actions/fetchUserID";
-import { usePosts } from "@/providers/PostContext";
 
 export default function WritePost() {
     const session = useSession();
-    const { setPosts } = usePosts();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
 
@@ -45,7 +43,6 @@ export default function WritePost() {
             };
 
             const addedBlog = await addPost(blog);
-            setPosts((e) => [addedBlog, ...e]);
 
             if (addedBlog) {
                 showToast("success", "Blog is posted successfully");
