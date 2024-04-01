@@ -6,13 +6,14 @@ import Spinner from "./Spinner";
 import Pagination from "./Pagination";
 import ShowBlogs from "./ShowBlogs";
 import SearchBlog from "./SearchBlog";
+import { type BlogProps } from "@/models/blogs";
 import { usePosts } from "@/providers/PostContext";
 
 export const POSTS_PER_PAGE = 5;
 
-export default function PostContainer() {
+export default function PostContainer({ posts }: { posts: BlogProps[] }) {
     const [searchValue, setSearchValue] = useState<string>("");
-    const { posts, page, loading, setPage, totalCount } = usePosts();
+    const { page, loading, setPage, totalCount } = usePosts();
 
     const filteredPosts = posts.filter((item) =>
         item.title.toLowerCase().includes(searchValue.toLowerCase())

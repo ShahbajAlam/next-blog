@@ -42,9 +42,9 @@ const PostProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         (async () => {
             setLoading(true);
-            const posts = await fetchAllPosts();
-            setPosts(posts as BlogProps[]);
-            setTotalCount(posts?.length as number);
+            const data = await fetchAllPosts();
+            setPosts(data?.posts as BlogProps[]);
+            setTotalCount(data?.totalCount as number);
             setLoading(false);
         })();
     }, []);

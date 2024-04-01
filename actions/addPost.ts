@@ -9,7 +9,7 @@ export default async function addPost(blog: BlogProps) {
         connectDB();
         const addedBlog = await Blog.create({ ...blog });
         if (addedBlog) {
-            revalidatePath("/", "page");
+            revalidatePath("/", "layout");
             return addedBlog;
         }
     } catch (error) {
