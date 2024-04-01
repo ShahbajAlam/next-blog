@@ -1,19 +1,39 @@
 "use client";
 
-import { BlogProps } from "@/models/blogs";
 import { usePosts } from "@/providers/PostContext";
 import Spinner from "./Spinner";
+import { type BlogProps } from "@/models/blogs";
+import parseHTML from "@/utils/parseHTML";
+import { ReactNode } from "react";
+import CommentForm from "./CommentForm";
 
 export default function ShowSingleBlog({ id }: { id: string }) {
-    const data = usePosts();
-    const post = data?.posts.filter((item) => item._id === id)[0] as BlogProps;
+    const { posts, loading } = usePosts();
+    const postIndex = posts.findIndex((item) => item._id === id);
+    const post = posts.at(postIndex) as BlogProps;
 
     return (
         <>
-            {data?.loading && <Spinner size={80} />}
-            {!data?.loading && (
-                <div>
-                    <h1 className="text-3xl">{post.title}</h1>
+            {loading && <Spinner size={80} />}
+            {!loading && (
+                <div className="w-full overflow-x-scroll">
+                    <div className="my-4">
+                        <h1 className="text-2xl">{post.title}</h1>
+                        <p>Posted By - {post.authorName}</p>
+                    </div>
+
+                    <div className="divider divider-success" />
+
+                    <div className="my-4">
+                        <p>{parseHTML(post.content)}</p>
+                    </div>
+
+                    <div className="divider divider-success" />
+
+                    <CommentForm
+                        authorID={post.authorID}
+                        authorName={post.authorName}
+                    />
                 </div>
             )}
         </>
